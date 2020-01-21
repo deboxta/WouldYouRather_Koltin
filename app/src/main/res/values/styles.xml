@@ -1,0 +1,67 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!--
+     Question Activity Styles
+    -->
+
+    <style name="AppTheme.Choice1Button">
+        <item name="android:backgroundTint">@color/colorChoice1</item>
+        <item name="android:textColor">@color/colorOnChoice1</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMaxTextSize">24sp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="AppTheme.Choice1ResultFrame">
+        <item name="android:background">@color/colorChoice1</item>
+        <item name="android:textColor">@color/colorOnChoice1</item>
+    </style>
+
+    <style name="AppTheme.Choice1ResultTextView">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center|top</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="AppTheme.Choice1ResultPercentTextView">
+        <item name="android:textColor">@color/colorOnChoice1</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="AppTheme.Choice2Button" parent="AppTheme.Choice1Button">
+        <item name="android:backgroundTint">@color/colorChoice2</item>
+        <item name="android:textColor">@color/colorOnChoice2</item>
+    </style>
+
+    <style name="AppTheme.Choice2ResultFrame" parent="AppTheme.Choice1ResultFrame">
+        <item name="android:background">@color/colorChoice2</item>
+        <item name="android:textColor">@color/colorOnChoice2</item>
+    </style>
+
+    <style name="AppTheme.Choice2ResultTextView" parent="AppTheme.Choice1ResultTextView">
+        <item name="android:textColor">@color/colorOnChoice2</item>
+    </style>
+
+    <style name="AppTheme.Choice2ResultPercentTextView" parent="AppTheme.Choice1ResultPercentTextView">
+        <item name="android:textColor">@color/colorOnChoice2</item>
+    </style>
+
+</resources>

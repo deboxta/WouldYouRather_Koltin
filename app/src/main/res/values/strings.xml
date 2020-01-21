@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="TypographyEllipsis">Would you rather...</string>
+
+    <string name="title_activity_question">Would you rather…</string>
+    <string name="title_activity_create_question">Create question</string>
+
+    <string name="hint_question">Your question</string>
+    <string name="hint_choice1">First choice</string>
+    <string name="hint_choice2">Second choice</string>
+
+    <string name="text_create_question">Create question</string>
+    <string name="text_retry">Retry</string>
+    <string name="text_report">Report</string>
+    <string name="text_reported">This question has been reported. Thank you!</string>
+    <string name="text_initial_question" tools:ignore="TypographyEllipsis">Would you rather...</string>
+
+    <string name="text_error">Error</string>
+    <string name="text_error_internet">No internet connectivity. Please try again later.</string>
+    <string name="text_error_server">Something went wrong. Please try again later.</string>
+    <string name="text_error_fill_field">Please fill this field.</string>
+</resources>
