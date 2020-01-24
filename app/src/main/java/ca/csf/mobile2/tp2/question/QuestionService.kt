@@ -39,6 +39,20 @@ class QuestionService {
         )
     }
 
+    @Background
+    fun createQuestion(
+        question : QuestionData,
+        onSuccess : (QuestionData) -> Unit,
+        onServerError : () -> Unit,
+        onConnectivityError : () -> Unit
+    ){
+        service.createQuestion(question).execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
     @UiThread
     protected fun doInUIThread(callback : () -> Unit){
         callback()
@@ -65,6 +79,9 @@ class QuestionService {
     private interface Service {
         @GET("/api/v1/question/random")
         fun findRandomQuestion() : Call<QuestionData>
+
+        @GET("/api/v1/question")
+        fun createQuestion(question: QuestionData) : Call<QuestionData>
     }
 }
 
