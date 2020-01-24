@@ -7,5 +7,5 @@ import org.parceler.ParcelConstructor
 @Parcel(Parcel.Serialization.BEAN)
 class AskQuestionActivityViewModel @ParcelConstructor constructor( )
     : BaseObservable() {
-
+    
 }
