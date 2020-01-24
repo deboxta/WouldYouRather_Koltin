@@ -14,13 +14,34 @@ class AskQuestionActivity : AppCompatActivity() {
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
 
+    @Bean
+    protected lateinit var questionService: QuestionService
+
     @AfterViews
     protected fun onCreate() {
         initView()
+        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+    }
+
+    @Click
+    protected fun onClickResponseButton(){
+
     }
 
     private fun initView() {
         setSupportActionBar(toolbar)
+    }
+
+    fun onSuccess (question : QuestionData){
+
+    }
+
+    fun onServerError(){
+
+    }
+
+    fun onConnectivityError(){
+
     }
 
     @OptionsItem(R.id.flagButton)
