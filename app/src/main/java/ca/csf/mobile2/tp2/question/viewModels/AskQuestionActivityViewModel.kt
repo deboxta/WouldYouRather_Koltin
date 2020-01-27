@@ -27,6 +27,8 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
+
+            notifyChange()
         }
 
     var isQuestionAnswered : Boolean = false

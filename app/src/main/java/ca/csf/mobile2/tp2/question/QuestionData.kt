@@ -16,6 +16,8 @@ data class QuestionData @ParcelConstructor constructor(
     private val changeListeners: MutableList<() -> Unit> = mutableListOf()
     private val hasListeners get() = changeListeners.size > 0
 
+    constructor(): this(null,null,null,null,null,null)
+
     fun addChangeListener(listener: () -> Unit) {
         changeListeners.add(listener)
     }

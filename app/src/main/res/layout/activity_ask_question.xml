@@ -92,7 +92,7 @@
                 style="@style/AppTheme.Choice1Button"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@{viewModel.choice1Text}"
+                android:text="@{viewModel.choice2Text}"
                 app:layout_constraintBottom_toTopOf="@+id/choice2Button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

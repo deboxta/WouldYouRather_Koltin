@@ -1,6 +1,7 @@
 package ca.csf.mobile2.tp2.question
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import ca.csf.mobile2.tp2.R
@@ -33,7 +34,7 @@ class AskQuestionActivity : AppCompatActivity() {
         if (!this::viewModel.isInitialized ) {
             viewModel =
                 AskQuestionActivityViewModel(
-                    QuestionData(null,null,null,null,null,null)
+                    QuestionData()
                 )
         }
         questionData = viewModel.questionData
@@ -45,6 +46,11 @@ class AskQuestionActivity : AppCompatActivity() {
     @Click(R.id.choice1Button, R.id.choice2Button)
     protected fun onClickResponseButton(){
         viewModel.isQuestionAnswered = true
+    }
+
+    @Click(R.id.createButton)
+    protected fun onClickCreateButton(){
+        startActivity(Intent(this, CreateQuestionActivity::class.java))
     }
 
     private fun initView() {

@@ -27,7 +27,7 @@ class CreateQuestionActivity : AppCompatActivity(){
         if (!this::viewModel.isInitialized ) {
             viewModel =
                 CreateQuestionActivityViewModel(
-                    QuestionData(null,null,null,null,null,null)
+                    QuestionData()
                 )
         }
         questionData = viewModel.questionData
