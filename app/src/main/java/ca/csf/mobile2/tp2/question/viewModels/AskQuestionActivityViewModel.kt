@@ -24,7 +24,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     val choice1Statistic : String?
         get() =
         if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-            (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+            (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
         } else {
             null
         }
@@ -33,7 +33,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     val choice2Statistic : String?
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-                (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+                (questionData.nbChoice2 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
             } else {
                 null
             }
@@ -85,3 +85,4 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
 }
 
 private const val PERCENT = 100
+private const val PERCENT_SYMBOL = "%"
