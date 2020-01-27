@@ -24,7 +24,7 @@ data class QuestionData @ParcelConstructor constructor(
         changeListeners.remove(listener)
     }
 
-    private fun notifyChanged() {
+    fun notifyChanged() {
         if (hasListeners) {
             for (listener in changeListeners) listener()
         }

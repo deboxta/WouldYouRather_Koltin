@@ -34,36 +34,47 @@ class AskQuestionActivity : AppCompatActivity() {
     protected fun onCreate() {
         initView()
         if (!this::viewModel.isInitialized ) {
+            questionData = QuestionData(null,null,null,null,null,null)
             viewModel =
                 AskQuestionActivityViewModel(
-                    QuestionData(null,null,null,null,null,null)
+                    questionData
                 )
         }
-        questionData = viewModel.questionData
         binding.viewModel = viewModel
         questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
     }
 
-    /*@Click
-    protected fun onClickResponseButton(){
+    @Click(R.id.choice1Button)
+    protected fun onClickResponseButtonChoose1(){
+        questionService.choose1(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    }
 
-    }*/
+    @Click(R.id.choice2Button)
+    protected fun onClickResponseButtonChoose2(){
+        questionService.choose2(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    }
 
     private fun initView() {
         setSupportActionBar(toolbar)
     }
 
-    fun onSuccess (question : QuestionData){
+    private fun onSuccess (question : QuestionData){
         questionData = question
-
-        viewModel.isAskingQuestion = true
+        viewModel.questionData = question
+        questionData.notifyChanged()
+        if (!viewModel.isAskingQuestion){
+            viewModel.isAskingQuestion = true
+        }else{
+            viewModel.isAskingQuestion = false
+            viewModel.isQuestionAnswered= true
+        }
     }
 
-    fun onServerError(){
+    private fun onServerError(){
         viewModel.isErrorDetected = true
     }
 
-    fun onConnectivityError(){
+    private fun onConnectivityError(){
         viewModel.isErrorDetected = true
     }
 

@@ -9,7 +9,7 @@ import org.parceler.Transient
 
 @Parcel(Parcel.Serialization.BEAN)
 class AskQuestionActivityViewModel @ParcelConstructor constructor(
-    val questionData: QuestionData
+    var questionData: QuestionData
 ) : BaseObservable() {
 
     @get:Transient
