@@ -41,9 +41,14 @@ class AskQuestionActivity : AppCompatActivity() {
         viewModel.isLoading = true
     }
 
-    @Click(R.id.choice1Button, R.id.choice2Button)
-    protected fun onClickResponseButton(){
-        viewModel.isQuestionAnswered = true
+    @Click(R.id.choice1Button)
+    protected fun onClickResponseButtonChoose1(){
+        questionService.choose1(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    }
+
+    @Click(R.id.choice2Button)
+    protected fun onClickResponseButtonChoose2(){
+        questionService.choose2(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
     }
 
     @Click(R.id.createButton)
@@ -64,7 +69,12 @@ class AskQuestionActivity : AppCompatActivity() {
     private fun onSuccess (question : QuestionData){
         viewModel.isLoading = false
         viewModel.questionData = question
-        viewModel.isAskingQuestion = true
+        if (!viewModel.isAskingQuestion){
+            viewModel.isAskingQuestion = true
+        }else{
+            viewModel.isAskingQuestion = false
+            viewModel.isQuestionAnswered= true
+        }
     }
 
     private fun onServerError(){
