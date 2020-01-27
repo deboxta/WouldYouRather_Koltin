@@ -37,10 +37,10 @@ class CreateQuestionActivity : AppCompatActivity(){
         binding.viewModel = viewModel
     }
 
-    @Click(R.id.createButton)
+    /*@Click(R.id.createButton)
     protected fun createQuestion(){
         val questionData = createQuestionData()
         questionService.createQuestion(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
-    }
+    }*/
 
 }

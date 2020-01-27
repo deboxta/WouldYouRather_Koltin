@@ -42,40 +42,34 @@ class AskQuestionActivity : AppCompatActivity() {
         questionData = viewModel.questionData
         binding.viewModel = viewModel
         questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
-
     }
 
-    @Click(R.id.choice1Button, R.id.choice2Button)
+    /*@Click
     protected fun onClickResponseButton(){
-        viewModel.isQuestionAnswered = true
-    }
+
+    }*/
 
     private fun initView() {
         setSupportActionBar(toolbar)
     }
 
-    private fun onSuccess (question : QuestionData){
+    fun onSuccess (question : QuestionData){
         questionData = question
 
         viewModel.isAskingQuestion = true
     }
 
-    private fun onServerError(){
+    fun onServerError(){
         viewModel.isErrorDetected = true
     }
 
-    private fun onConnectivityError(){
+    fun onConnectivityError(){
         viewModel.isErrorDetected = true
     }
 
     @OptionsItem(R.id.flagButton)
     protected fun flag() {
         TODO("Flag question")
-    }
-
-    @Click(R.id.createButton)
-    protected fun onClickCreateQuestion(){
-        startActivity(Intent(this,CreateQuestionActivity_::class.java))
     }
 }
 
