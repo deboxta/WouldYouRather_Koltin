@@ -23,7 +23,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     @get:Transient
     val choice1Statistic : String?
         get() =
-        if (questionData.nbChoice1 != 0 && questionData.nbChoice2 != 0){
+        if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
             (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
         } else {
             null
@@ -32,7 +32,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     @get:Transient
     val choice2Statistic : String?
         get() =
-            if (questionData.nbChoice1 != 0 && questionData.nbChoice2 != 0){
+            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
                 (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
             } else {
                 null

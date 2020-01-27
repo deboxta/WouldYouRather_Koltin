@@ -20,6 +20,7 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @InstanceState
     protected  lateinit var viewModel: AskQuestionActivityViewModel
+    private lateinit var questionData : QuestionData
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -31,9 +32,10 @@ class AskQuestionActivity : AppCompatActivity() {
     protected fun onCreate() {
         initView()
         if (!this::viewModel.isInitialized ) {
+            questionData = QuestionData()
             viewModel =
                 AskQuestionActivityViewModel(
-                    QuestionData()
+                    questionData
                 )
         }
         binding.viewModel = viewModel
@@ -67,6 +69,7 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 
     private fun onSuccess (question : QuestionData){
+        questionData = question
         viewModel.isLoading = false
         viewModel.questionData = question
         if (!viewModel.isAskingQuestion){
