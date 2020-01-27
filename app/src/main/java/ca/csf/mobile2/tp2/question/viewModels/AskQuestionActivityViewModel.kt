@@ -33,7 +33,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     val choice2Statistic : String?
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-                (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+                (questionData.nbChoice2 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
             } else {
                 null
             }
@@ -43,6 +43,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value){
                 isErrorDetected = false
                 isQuestionAnswered = false
+                isFlagging = false
             }
             field = value
 
@@ -54,6 +55,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value){
                 isAskingQuestion = false
                 isErrorDetected = false
+                isFlagging = false
             }
             field = value
             questionData.notifyChanged()
@@ -64,6 +66,18 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value){
                 isAskingQuestion = false
                 isQuestionAnswered = false
+                isFlagging = false
+            }
+            field = value
+            questionData.notifyChanged()
+        }
+
+    var isFlagging : Boolean = false
+        set(value) {
+            if (value){
+                isAskingQuestion = false
+                isQuestionAnswered = false
+                isErrorDetected = false
             }
             field = value
             questionData.notifyChanged()
