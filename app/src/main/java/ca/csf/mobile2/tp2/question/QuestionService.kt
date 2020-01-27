@@ -8,7 +8,10 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.create
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import java.io.IOException
 
 
@@ -16,6 +19,8 @@ import java.io.IOException
 class QuestionService {
 
     private val service : Service
+
+    private lateinit var question : QuestionData
 
     init {
         val retrofit = Retrofit.Builder()
@@ -33,6 +38,36 @@ class QuestionService {
         onConnectivityError : () -> Unit
     ){
         service.findRandomQuestion().execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
+    @Background
+    fun createQuestion(
+        question : QuestionData,
+        onSuccess : (QuestionData) -> Unit,
+        onServerError : () -> Unit,
+        onConnectivityError : () -> Unit
+    ){
+        this.question = question
+        service.createQuestion(question).execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
+    @Background
+    fun flagQuestion(
+        question : QuestionData,
+        onSuccess : (QuestionData) -> Unit,
+        onServerError : () -> Unit,
+        onConnectivityError : () -> Unit
+    ){
+        this.question = question
+        service.createQuestion(question).execute(
             onSuccess,
             onServerError,
             onConnectivityError
@@ -65,7 +100,13 @@ class QuestionService {
     private interface Service {
         @GET("/api/v1/question/random")
         fun findRandomQuestion() : Call<QuestionData>
+
+        @POST("/api/v1/question")
+        fun createQuestion(@Body question: QuestionData) : Call<QuestionData>
+
+        @POST("/api/v1/question/{id}/flag")
+        fun flagQuestion(@Path("id") id : String) : Call<QuestionData>
     }
 }
 
-private const val URL = "http://10.200.77.203:8080"
+private const val URL = "http://10.200.82.153:8080"

@@ -27,6 +27,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
+            notifyChange()
         }
 
     var isQuestionAnswered : Boolean = false
@@ -36,6 +37,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isErrorDetected = false
             }
             field = value
+            notifyChange()
         }
 
     var isErrorDetected : Boolean = false
@@ -45,6 +47,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
+            notifyChange()
         }
 
     var isLoading : Boolean = false
