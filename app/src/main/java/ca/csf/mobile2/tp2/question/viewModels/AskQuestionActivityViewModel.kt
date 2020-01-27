@@ -9,7 +9,7 @@ import org.parceler.Transient
 
 @Parcel(Parcel.Serialization.BEAN)
 class AskQuestionActivityViewModel @ParcelConstructor constructor(
-    val questionData: QuestionData
+    var questionData: QuestionData
 ) : BaseObservable() {
 
     @get:Transient
@@ -20,6 +20,24 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
     val choice2Text : String?
         get() = questionData.choice2
 
+    @get:Transient
+    val choice1Statistic : String?
+        get() =
+        if (questionData.nbChoice1 != 0 && questionData.nbChoice2 != 0){
+            (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+        } else {
+            null
+        }
+
+    @get:Transient
+    val choice2Statistic : String?
+        get() =
+            if (questionData.nbChoice1 != 0 && questionData.nbChoice2 != 0){
+                (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+            } else {
+                null
+            }
+
     var isAskingQuestion : Boolean = false
         set(value) {
             if (value){
@@ -27,6 +45,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
+
             notifyChange()
         }
 
@@ -37,7 +56,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isErrorDetected = false
             }
             field = value
-            notifyChange()
+            questionData.notifyChanged()
         }
 
     var isErrorDetected : Boolean = false
@@ -47,7 +66,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
-            notifyChange()
+            questionData.notifyChanged()
         }
 
     var isLoading : Boolean = false
@@ -64,3 +83,5 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
         questionData.removeChangeListener(this::notifyChange)
     }
 }
+
+private const val PERCENT = 100
