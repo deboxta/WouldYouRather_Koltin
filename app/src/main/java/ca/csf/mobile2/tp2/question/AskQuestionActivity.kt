@@ -42,17 +42,14 @@ class AskQuestionActivity : AppCompatActivity() {
 
     private fun onSuccess (question : QuestionData){
         TODO()
-
     }
 
     private fun onServerError(){
         TODO()
-
     }
 
     private fun onConnectivityError(){
         TODO()
-
     }
 
     @OptionsItem(R.id.flagButton)

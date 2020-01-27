@@ -50,11 +50,9 @@ class CreateQuestionActivity : AppCompatActivity(){
 
     private fun onServerError(){
         TODO()
-
     }
 
     private fun onConnectivityError(){
         TODO()
-
     }
 }

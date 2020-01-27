@@ -8,7 +8,10 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.create
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
 import java.io.IOException
 
 
@@ -16,6 +19,8 @@ import java.io.IOException
 class QuestionService {
 
     private val service : Service
+
+    private lateinit var question : QuestionData
 
     init {
         val retrofit = Retrofit.Builder()
@@ -46,6 +51,22 @@ class QuestionService {
         onServerError : () -> Unit,
         onConnectivityError : () -> Unit
     ){
+        this.question = question
+        service.createQuestion(question).execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
+    @Background
+    fun flagQuestion(
+        question : QuestionData,
+        onSuccess : (QuestionData) -> Unit,
+        onServerError : () -> Unit,
+        onConnectivityError : () -> Unit
+    ){
+        this.question = question
         service.createQuestion(question).execute(
             onSuccess,
             onServerError,
@@ -80,8 +101,11 @@ class QuestionService {
         @GET("/api/v1/question/random")
         fun findRandomQuestion() : Call<QuestionData>
 
-        @GET("/api/v1/question")
-        fun createQuestion(question: QuestionData) : Call<QuestionData>
+        @POST("/api/v1/question")
+        fun createQuestion(@Body question: QuestionData) : Call<QuestionData>
+
+        @POST("/api/v1/question/{id}/flag")
+        fun flagQuestion(@Path("id") id : String) : Call<QuestionData>
     }
 }
 
