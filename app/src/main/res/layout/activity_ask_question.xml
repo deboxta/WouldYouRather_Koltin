@@ -84,7 +84,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:visibility="@{viewModel.isAskingQuestion ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{viewModel.isAskingQuestion ? View.VISIBLE : View.INVISIBLE}"
             tools:visibility="visible">
 
             <Button
@@ -129,7 +129,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:visibility="@{viewModel.isQuestionAnswered ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{viewModel.isQuestionAnswered ? View.VISIBLE : View.INVISIBLE}"
             tools:visibility="invisible">
 
             <View
@@ -205,7 +205,7 @@
             android:layout_height="match_parent"
             android:background="?android:colorBackground"
             android:translationZ="16dp"
-            android:visibility="@{viewModel.isErrorDetected ? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{viewModel.isErrorDetected ? View.VISIBLE : View.INVISIBLE}"
             tools:visibility="invisible">
 
             <ImageView

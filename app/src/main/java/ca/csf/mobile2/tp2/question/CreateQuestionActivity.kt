@@ -3,6 +3,9 @@ package ca.csf.mobile2.tp2.question
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import ca.csf.mobile2.tp2.R
+import com.google.android.material.textfield.TextInputLayout
+import org.androidannotations.annotations.*
+import java.util.*
 import ca.csf.mobile2.tp2.databinding.ActivityCreateQuestionBinding
 import ca.csf.mobile2.tp2.question.viewModels.CreateQuestionActivityViewModel
 import org.androidannotations.annotations.*
@@ -33,5 +36,11 @@ class CreateQuestionActivity : AppCompatActivity(){
         questionData = viewModel.questionData
         binding.viewModel = viewModel
     }
+
+    /*@Click(R.id.createButton)
+    protected fun createQuestion(){
+        val questionData = createQuestionData()
+        questionService.createQuestion(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    }*/
 
 }
