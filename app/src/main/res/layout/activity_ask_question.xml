@@ -1,251 +1,268 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".question.AskQuestionActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        tools:title="Would you rather..." />
+    <data>
+        <import type="android.view.View"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="8dp"
-        app:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        <variable
+            name="viewModel"
+            type="ca.csf.mobile2.tp2.question.viewModels.AskQuestionActivityViewModel" />
+    </data>
 
-    <!--
-    *************************************************************
-    IMPORTANT!!!!
-
-    En temps normal, ce fichier de layout serait séparé en
-    plusieurs petits fichiers. Cependant, cela complexifie
-    votre gestion du DataBinding. Pour simplifier le travail,
-    il n'y a qu'un seul fichier contenant diverses parties que
-    vous devrez afficher ou cacher en fonction des besoins.
-
-    Pour afficher ou cacher un élément d'interface, utilisez
-    cet attribut :
-
-        android:visibility
-
-    Ce dernier peut recevoir une de ces trois valeurs :
-
-     * View.VISIBLE
-     * View.INVISIBLE
-     * View.GONE
-
-    Quand vous serez rendu à modifier ce fichier pour faire du
-    DataBinding, ajoutez ceci dans la balise « <data> » :
-
-        <import type="android.view.View" />
-
-    Cela vous sera nécessaire pour avoir accès aux différentes
-    constantes.
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="@{viewModel.isAskingQuestion ? View.VISIBLE : View.INVISIBLE}">
+        android:fitsSystemWindows="true"
+        tools:context=".question.AskQuestionActivity">
 
-    *************************************************************
-    -->
-
-    <!--
-    *************************************************************
-    Section "Poser une question"
-    *************************************************************
-    -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        tools:visibility="visible">
-
-        <Button
-            android:id="@+id/choice1Button"
-            style="@style/AppTheme.Choice1Button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/choice2Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Only be able to laugh at violently racist jokes" />
-
-        <Button
-            android:id="@+id/choice2Button"
-            style="@style/AppTheme.Choice2Button"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/choice1Button"
-            tools:text="Only be able to laugh at intricate Star Trek jokes" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--
-    *************************************************************
-    Section "Afficher les résultats"
-    *************************************************************
-    -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/answerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        tools:visibility="invisible">
-
-        <View
-            android:id="@+id/choice1ResultBackground"
-            style="@style/AppTheme.Choice1ResultFrame"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@id/choice2ResultBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/choice2ResultBackground"
-            style="@style/AppTheme.Choice2ResultFrame"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/choice1ResultBackground" />
-
-        <TextView
-            style="@style/AppTheme.Choice1ResultPercentTextView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/choice1ResultBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/choice1ResultBackground"
-            app:layout_constraintVertical_chainStyle="spread"
-            tools:text="55%" />
-
-        <TextView
-            style="@style/AppTheme.Choice1ResultTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/choice1ResultBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Only be able to laugh at violently racist jokes" />
-
-        <TextView
-            style="@style/AppTheme.Choice2ResultPercentTextView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/choice2ResultBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/choice2ResultBackground"
-            tools:text="45%" />
-
-        <TextView
-            style="@style/AppTheme.Choice2ResultTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/choice2ResultBackground"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Only be able to laugh at intricate Star Trek jokes" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--
-    *************************************************************
-    Section "Afficher les erreurs"
-    *************************************************************
-    -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:colorBackground"
-        android:translationZ="16dp"
-        tools:visibility="invisible">
-
-        <ImageView
-            android:id="@+id/errorImageView"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/text_error"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_wifi_off" />
-
-        <TextView
-            android:id="@+id/errorTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/errorImageView"
-            tools:text="@string/text_error_internet" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/retryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_retry"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/errorTextView" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--
-    *************************************************************
-    Section "Afficher le chargement d'une question"
-    *************************************************************
-    -->
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorDarkAlpha"
-        android:translationZ="16dp"
-        tools:visibility="invisible">
-
-        <ProgressBar
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            tools:title="Would you rather..." />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="end|bottom"
+            android:layout_margin="8dp"
+            app:elevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_add" />
 
-    </FrameLayout>
+        <!--
+        *************************************************************
+        IMPORTANT!!!!
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        En temps normal, ce fichier de layout serait séparé en
+        plusieurs petits fichiers. Cependant, cela complexifie
+        votre gestion du DataBinding. Pour simplifier le travail,
+        il n'y a qu'un seul fichier contenant diverses parties que
+        vous devrez afficher ou cacher en fonction des besoins.
+
+        Pour afficher ou cacher un élément d'interface, utilisez
+        cet attribut :
+
+            android:visibility
+
+        Ce dernier peut recevoir une de ces trois valeurs :
+
+         * View.VISIBLE
+         * View.INVISIBLE
+         * View.GONE
+
+        Quand vous serez rendu à modifier ce fichier pour faire du
+        DataBinding, ajoutez ceci dans la balise « <data> » :
+
+            <import type="android.view.View" />
+
+        Cela vous sera nécessaire pour avoir accès aux différentes
+        constantes.
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.isAskingQuestion ? View.VISIBLE : View.INVISIBLE}">
+
+        *************************************************************
+        -->
+
+        <!--
+        *************************************************************
+        Section "Poser une question"
+        *************************************************************
+        -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="@{viewModel.isAskingQuestion ? View.INVISIBLE : View.VISIBLE}"
+            tools:visibility="visible">
+
+            <Button
+                android:id="@+id/choice1Button"
+                style="@style/AppTheme.Choice1Button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{viewModel.choice1Text}"
+                app:layout_constraintBottom_toTopOf="@+id/choice2Button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Only be able to laugh at violently racist jokes" />
+
+            <Button
+                android:id="@+id/choice2Button"
+                style="@style/AppTheme.Choice2Button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{viewModel.choice2Text}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choice1Button"
+                tools:text="Only be able to laugh at intricate Star Trek jokes" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--
+        *************************************************************
+        Section "Afficher les résultats"
+        *************************************************************
+        -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/answerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="@{viewModel.isQuestionAnswered ? View.INVISIBLE : View.VISIBLE}"
+            tools:visibility="invisible">
+
+            <View
+                android:id="@+id/choice1ResultBackground"
+                style="@style/AppTheme.Choice1ResultFrame"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@id/choice2ResultBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/choice2ResultBackground"
+                style="@style/AppTheme.Choice2ResultFrame"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/choice1ResultBackground" />
+
+            <TextView
+                style="@style/AppTheme.Choice1ResultPercentTextView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/choice1ResultBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/choice1ResultBackground"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:text="55%" />
+
+            <TextView
+                style="@style/AppTheme.Choice1ResultTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/choice1ResultBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Only be able to laugh at violently racist jokes" />
+
+            <TextView
+                style="@style/AppTheme.Choice2ResultPercentTextView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/choice2ResultBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/choice2ResultBackground"
+                tools:text="45%" />
+
+            <TextView
+                style="@style/AppTheme.Choice2ResultTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/choice2ResultBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Only be able to laugh at intricate Star Trek jokes" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--
+        *************************************************************
+        Section "Afficher les erreurs"
+        *************************************************************
+        -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:colorBackground"
+            android:translationZ="16dp"
+            android:visibility="@{viewModel.isErrorDetected ? View.INVISIBLE : View.VISIBLE}"
+            tools:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/errorImageView"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/text_error"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:srcCompat="@drawable/ic_wifi_off" />
+
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/errorImageView"
+                tools:text="@string/text_error_internet" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/retryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_retry"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/errorTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--
+        *************************************************************
+        Section "Afficher le chargement d'une question"
+        *************************************************************
+        -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorDarkAlpha"
+            android:translationZ="16dp"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.INVISIBLE}"
+            tools:visibility="invisible">
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
