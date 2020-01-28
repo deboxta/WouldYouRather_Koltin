@@ -62,12 +62,13 @@ class QuestionService {
     @Background
     fun flagQuestion(
         question: QuestionData,
-        onSuccess: (QuestionData) -> Unit,
+        onSuccess: (String) -> Unit,
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
         this.question = question
-        service.flagQuestion(question.id.toString()).execute(
+        val id : String = question.id.toString()
+        service.flagQuestion(id).execute(
             onSuccess,
             onServerError,
             onConnectivityError
@@ -98,7 +99,8 @@ class QuestionService {
         onConnectivityError: () -> Unit
     ) {
         this.question = question
-        service.choose2(question.id.toString()).execute(
+        val id : String = question.id.toString()
+        service.choose2(id).execute(
             onSuccess,
             onServerError,
             onConnectivityError
@@ -136,7 +138,7 @@ class QuestionService {
         fun createQuestion(@Body question: QuestionData): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
-        fun flagQuestion(@Path("id") id: String): Call<QuestionData>
+        fun flagQuestion(@Path("id") id : String) : Call<String>
 
         @POST("/api/v1/question/{id}/choose1")
         fun choose1(@Path("id") id: String): Call<QuestionData>

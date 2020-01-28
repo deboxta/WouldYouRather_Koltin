@@ -19,8 +19,17 @@ class AskQuestionActivity : AppCompatActivity() {
     protected lateinit var binding: ActivityAskQuestionBinding
 
     @InstanceState
-    protected lateinit var viewModel: AskQuestionActivityViewModel
-    private lateinit var questionData: QuestionData
+    protected  lateinit var viewModel: AskQuestionActivityViewModel
+    private lateinit var questionData : QuestionData
+    private var viewState : ViewState = ViewState.IS_LOADING
+        set(value) {
+            when (value){
+                ViewState.IS_ASKING_QUESTION -> viewModel.isAskingQuestion = true
+                ViewState.IS_QUESTION_ANSWERED -> viewModel.isQuestionAnswered = true
+                ViewState.IS_FLAGGING -> viewModel.isFlagging = true
+                ViewState.IS_ERROR_DETECTED -> viewModel.isErrorDetected = true
+            }
+        }
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -55,6 +64,7 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
+        viewModel.isLoading = true
     }
 
     @Click(R.id.choice2Button)
@@ -65,11 +75,13 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
+        viewModel.isLoading = true
     }
 
     @Click(R.id.createButton)
     protected fun onClickCreateButton() {
         startActivity(Intent(this, CreateQuestionActivity_::class.java))
+        viewModel.isLoading = true
     }
 
     @Click(R.id.retryButton)
@@ -79,6 +91,12 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
+        viewModel.isLoading = true
+    }
+
+    @OptionsItem(R.id.flagButton)
+    protected fun flag() {
+        questionService.flagQuestion(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
         viewModel.isLoading = true
     }
 
@@ -97,10 +115,14 @@ class AskQuestionActivity : AppCompatActivity() {
         updateTitleText(question.text)
         if (!viewModel.isAskingQuestion) {
             viewModel.isAskingQuestion = true
-        } else {
-            viewModel.isAskingQuestion = false
+        }else{
             viewModel.isQuestionAnswered = true
         }
+    }
+
+    private fun onSuccess(response : String) {
+        viewModel.isFlagging = true
+        //TODO show snackbar
     }
 
     private fun onServerError() {
@@ -112,10 +134,13 @@ class AskQuestionActivity : AppCompatActivity() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
     }
+}
 
-    @OptionsItem(R.id.flagButton)
-    protected fun flag() {
-        TODO("Flag question")
-    }
+enum class ViewState{
+    IS_ASKING_QUESTION,
+    IS_QUESTION_ANSWERED,
+    IS_FLAGGING,
+    IS_LOADING,
+    IS_ERROR_DETECTED
 }
 
