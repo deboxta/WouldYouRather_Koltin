@@ -77,6 +77,12 @@ class AskQuestionActivity : AppCompatActivity() {
         viewModel.isLoading = true
     }
 
+    @Click(R.id.choice1ResultBackground,R.id.choice2ResultBackground)
+    protected fun onClickResultButton(){
+        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+        viewModel.isLoading = true
+    }
+
     @Click(R.id.createButton)
     protected fun onClickCreateButton() {
         startActivity(Intent(this, CreateQuestionActivity_::class.java))
