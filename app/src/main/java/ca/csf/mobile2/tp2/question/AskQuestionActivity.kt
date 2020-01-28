@@ -16,11 +16,11 @@ import org.androidannotations.annotations.*
 class AskQuestionActivity : AppCompatActivity() {
 
     @BindingObject
-    protected  lateinit var binding : ActivityAskQuestionBinding
+    protected lateinit var binding: ActivityAskQuestionBinding
 
     @InstanceState
-    protected  lateinit var viewModel: AskQuestionActivityViewModel
-    private lateinit var questionData : QuestionData
+    protected lateinit var viewModel: AskQuestionActivityViewModel
+    private lateinit var questionData: QuestionData
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -31,7 +31,7 @@ class AskQuestionActivity : AppCompatActivity() {
     @AfterViews
     protected fun onCreate() {
         initView()
-        if (!this::viewModel.isInitialized ) {
+        if (!this::viewModel.isInitialized) {
             questionData = QuestionData()
             viewModel =
                 AskQuestionActivityViewModel(
@@ -39,28 +39,46 @@ class AskQuestionActivity : AppCompatActivity() {
                 )
         }
         binding.viewModel = viewModel
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
         viewModel.isLoading = true
     }
 
     @Click(R.id.choice1Button)
-    protected fun onClickResponseButtonChoose1(){
-        questionService.choose1(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    protected fun onClickResponseButtonChoose1() {
+        questionService.choose1(
+            questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
     }
 
     @Click(R.id.choice2Button)
-    protected fun onClickResponseButtonChoose2(){
-        questionService.choose2(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+    protected fun onClickResponseButtonChoose2() {
+        questionService.choose2(
+            questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
     }
 
     @Click(R.id.createButton)
-    protected fun onClickCreateButton(){
+    protected fun onClickCreateButton() {
         startActivity(Intent(this, CreateQuestionActivity_::class.java))
     }
 
     @Click(R.id.retryButton)
-    protected fun onClickRetryButton(){
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+    protected fun onClickRetryButton() {
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
         viewModel.isLoading = true
     }
 
@@ -68,24 +86,29 @@ class AskQuestionActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    private fun onSuccess (question : QuestionData){
+    private fun updateTitleText(title: String?){
+        toolbar.title = title
+    }
+
+    private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
         viewModel.questionData = question
-        if (!viewModel.isAskingQuestion){
+        updateTitleText(question.text)
+        if (!viewModel.isAskingQuestion) {
             viewModel.isAskingQuestion = true
-        }else{
+        } else {
             viewModel.isAskingQuestion = false
-            viewModel.isQuestionAnswered= true
+            viewModel.isQuestionAnswered = true
         }
     }
 
-    private fun onServerError(){
+    private fun onServerError() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
     }
 
-    private fun onConnectivityError(){
+    private fun onConnectivityError() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
     }

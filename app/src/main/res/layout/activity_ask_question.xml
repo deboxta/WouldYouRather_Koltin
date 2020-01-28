@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -21,7 +22,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            tools:title="Would you rather..." />
+            tools:title="@string/title_activity_question" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createButton"

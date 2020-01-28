@@ -13,34 +13,34 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
 ) : BaseObservable() {
 
     @get:Transient
-    val choice1Text : String?
+    val choice1Text: String?
         get() = questionData.choice1
 
     @get:Transient
-    val choice2Text : String?
+    val choice2Text: String?
         get() = questionData.choice2
 
     @get:Transient
-    val choice1Statistic : String?
+    val choice1Statistic: String?
         get() =
-        if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-            (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
-        } else {
-            null
-        }
-
-    @get:Transient
-    val choice2Statistic : String?
-        get() =
-            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-                (questionData.nbChoice2 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
+            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
+                (questionData.nbChoice1 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
             } else {
                 null
             }
 
-    var isAskingQuestion : Boolean = false
+    @get:Transient
+    val choice2Statistic: String?
+        get() =
+            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
+                (questionData.nbChoice2 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
+            } else {
+                null
+            }
+
+    var isAskingQuestion: Boolean = false
         set(value) {
-            if (value){
+            if (value) {
                 isErrorDetected = false
                 isQuestionAnswered = false
             }
@@ -49,9 +49,9 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             notifyChange()
         }
 
-    var isQuestionAnswered : Boolean = false
+    var isQuestionAnswered: Boolean = false
         set(value) {
-            if (value){
+            if (value) {
                 isAskingQuestion = false
                 isErrorDetected = false
             }
@@ -59,9 +59,9 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             questionData.notifyChanged()
         }
 
-    var isErrorDetected : Boolean = false
+    var isErrorDetected: Boolean = false
         set(value) {
-            if (value){
+            if (value) {
                 isAskingQuestion = false
                 isQuestionAnswered = false
             }
@@ -69,7 +69,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             questionData.notifyChanged()
         }
 
-    var isLoading : Boolean = false
+    var isLoading: Boolean = false
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         super.addOnPropertyChangedCallback(callback)

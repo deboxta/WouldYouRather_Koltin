@@ -6,17 +6,17 @@ import java.util.*
 
 @Parcel(Parcel.Serialization.BEAN)
 data class QuestionData @ParcelConstructor constructor(
-    var choice1 : String?,
-    var choice2 : String?,
-    val id : UUID?,
-    val nbChoice1 : Int,
-    val nbChoice2 : Int,
-    var text : String?
-){
+    var choice1: String?,
+    var choice2: String?,
+    val id: UUID?,
+    val nbChoice1: Int,
+    val nbChoice2: Int,
+    var text: String?
+) {
     private val changeListeners: MutableList<() -> Unit> = mutableListOf()
     private val hasListeners get() = changeListeners.size > 0
 
-    constructor(): this(null,null,null,0,0,null)
+    constructor() : this(null, null, null, 0, 0, null)
 
     fun addChangeListener(listener: () -> Unit) {
         changeListeners.add(listener)
