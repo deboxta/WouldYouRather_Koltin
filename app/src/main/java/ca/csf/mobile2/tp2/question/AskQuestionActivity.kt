@@ -26,7 +26,7 @@ class AskQuestionActivity : AppCompatActivity() {
             when (value){
                 ViewState.IS_ASKING_QUESTION -> viewModel.isAskingQuestion = true
                 ViewState.IS_QUESTION_ANSWERED -> viewModel.isQuestionAnswered = true
-                ViewState.IS_FLAGING -> viewModel.isFlagging = true
+                ViewState.IS_FLAGGING -> viewModel.isFlagging = true
                 ViewState.IS_ERROR_DETECTED -> viewModel.isErrorDetected = true
             }
         }
@@ -55,6 +55,13 @@ class AskQuestionActivity : AppCompatActivity() {
     @Click(R.id.choice1Button)
     protected fun onClickResponseButtonChoose1(){
         questionService.choose1(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
+        viewModel.isLoading = true
+    }
+
+    @Click(R.id.choice1ResultBackground,R.id.choice2ResultBackground)
+    protected fun onClickResultButton(){
+        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+        viewModel.isLoading = true
     }
 
     @Click(R.id.choice2Button)
@@ -92,8 +99,13 @@ class AskQuestionActivity : AppCompatActivity() {
         if (!viewModel.isAskingQuestion){
             viewModel.isAskingQuestion = true
         }else{
-            viewModel.isQuestionAnswered= true
+            viewModel.isQuestionAnswered = true
         }
+    }
+
+    private fun onSuccess(response : String){
+        viewModel.isFlagging = true
+        //TODO show snackbar
     }
 
     private fun onServerError(){
@@ -110,7 +122,7 @@ class AskQuestionActivity : AppCompatActivity() {
 enum class ViewState{
     IS_ASKING_QUESTION,
     IS_QUESTION_ANSWERED,
-    IS_FLAGING,
+    IS_FLAGGING,
     IS_LOADING,
     IS_ERROR_DETECTED
 }
