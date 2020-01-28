@@ -26,7 +26,6 @@ class AskQuestionActivity : AppCompatActivity() {
             when (value){
                 ViewState.IS_ASKING_QUESTION -> viewModel.isAskingQuestion = true
                 ViewState.IS_QUESTION_ANSWERED -> viewModel.isQuestionAnswered = true
-                ViewState.IS_FLAGGING -> viewModel.isFlagging = true
                 ViewState.IS_ERROR_DETECTED -> viewModel.isErrorDetected = true
             }
         }
@@ -121,7 +120,6 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 
     private fun onSuccess(response : String) {
-        viewModel.isFlagging = true
         //TODO show snackbar
     }
 
@@ -139,7 +137,6 @@ class AskQuestionActivity : AppCompatActivity() {
 enum class ViewState{
     IS_ASKING_QUESTION,
     IS_QUESTION_ANSWERED,
-    IS_FLAGGING,
     IS_LOADING,
     IS_ERROR_DETECTED
 }
