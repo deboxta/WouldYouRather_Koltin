@@ -116,15 +116,10 @@ class AskQuestionActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    private fun updateTitleText(title: String?) {
-        toolbar.title = title
-    }
-
     private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
         viewModel.questionData = question
-        updateTitleText(question.text)
         if (!viewModel.isAskingQuestion) {
             viewModel.isAskingQuestion = true
         } else {

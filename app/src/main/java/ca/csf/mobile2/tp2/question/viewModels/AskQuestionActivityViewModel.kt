@@ -9,8 +9,20 @@ import org.parceler.Transient
 
 @Parcel(Parcel.Serialization.BEAN)
 class AskQuestionActivityViewModel @ParcelConstructor constructor(
-    var questionData: QuestionData
+    questionData: QuestionData
 ) : BaseObservable() {
+
+    var questionData = questionData
+        set(value) {
+            field.removeChangeListener(this::notifyChange)
+            field = value
+            field.addChangeListener(this::notifyChange)
+            notifyChange()
+        }
+
+    @get:Transient
+    val titleText: String?
+        get() = questionData.text
 
     @get:Transient
     val choice1Text: String?
@@ -56,7 +68,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isErrorDetected = false
             }
             field = value
-            questionData.notifyChanged()
+            notifyChange()
         }
 
     var isErrorDetected: Boolean = false
@@ -66,7 +78,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isQuestionAnswered = false
             }
             field = value
-            questionData.notifyChanged()
+            notifyChange()
         }
 
     var isLoading: Boolean = false

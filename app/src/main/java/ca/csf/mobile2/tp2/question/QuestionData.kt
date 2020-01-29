@@ -5,14 +5,50 @@ import org.parceler.ParcelConstructor
 import java.util.*
 
 @Parcel(Parcel.Serialization.BEAN)
-data class QuestionData @ParcelConstructor constructor(
-    var choice1: String?,
-    var choice2: String?,
-    val id: UUID?,
-    val nbChoice1: Int,
-    val nbChoice2: Int,
-    var text: String?
+class QuestionData @ParcelConstructor constructor(
+    choice1: String?,
+    choice2: String?,
+    id: UUID?,
+    nbChoice1: Int,
+    nbChoice2: Int,
+    text: String?
 ) {
+    var choice1 = choice1
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var choice2 = choice2
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var id = id
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var nbChoice1 = nbChoice1
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var nbChoice2 = nbChoice2
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var text = text
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
     private val changeListeners: MutableList<() -> Unit> = mutableListOf()
     private val hasListeners get() = changeListeners.size > 0
 
@@ -26,7 +62,7 @@ data class QuestionData @ParcelConstructor constructor(
         changeListeners.remove(listener)
     }
 
-    fun notifyChanged() {
+    private fun notifyChanged() {
         if (hasListeners) {
             for (listener in changeListeners) listener()
         }
