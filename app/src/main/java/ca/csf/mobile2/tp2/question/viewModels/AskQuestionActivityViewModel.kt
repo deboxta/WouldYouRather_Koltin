@@ -66,8 +66,15 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value){
                 isAskingQuestion = false
                 isQuestionAnswered = false
+                isConnectivityErrorDetected = false
                 isFlagging = false
             }
+            field = value
+            questionData.notifyChanged()
+        }
+
+    var isConnectivityErrorDetected : Boolean = false
+        set(value) {
             field = value
             questionData.notifyChanged()
         }

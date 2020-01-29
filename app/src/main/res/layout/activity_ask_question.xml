@@ -210,7 +210,7 @@
             android:background="?android:colorBackground"
             android:translationZ="16dp"
             android:visibility="@{viewModel.isErrorDetected ? View.VISIBLE : View.INVISIBLE}"
-            tools:visibility="invisible">
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/errorImageView"
@@ -230,6 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:text="@{viewModel.isConnectivityErrorDetected ? @string/text_error_internet : @string/text_error_server}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/errorImageView"

@@ -26,16 +26,6 @@ class AskQuestionActivity : AppCompatActivity() {
     @InstanceState
     protected lateinit var questionData : QuestionData
 
-    private var viewState : ViewState = ViewState.IS_LOADING
-        set(value) {
-            when (value){
-                ViewState.IS_ASKING_QUESTION -> viewModel.isAskingQuestion = true
-                ViewState.IS_QUESTION_ANSWERED -> viewModel.isQuestionAnswered = true
-                ViewState.IS_FLAGGING -> viewModel.isFlagging = true
-                ViewState.IS_ERROR_DETECTED -> viewModel.isErrorDetected = true
-            }
-        }
-
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
 
@@ -85,8 +75,8 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @Click(R.id.retryButton)
     protected fun onClickRetryButton(){
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
         viewModel.isLoading = true
+        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
     }
 
     @OptionsItem(R.id.flagButton)
@@ -124,14 +114,7 @@ class AskQuestionActivity : AppCompatActivity() {
     private fun onConnectivityError(){
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
+        viewModel.isConnectivityErrorDetected = true
     }
-}
-
-enum class ViewState{
-    IS_ASKING_QUESTION,
-    IS_QUESTION_ANSWERED,
-    IS_FLAGGING,
-    IS_LOADING,
-    IS_ERROR_DETECTED
 }
 
