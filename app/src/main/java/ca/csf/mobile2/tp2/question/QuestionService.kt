@@ -1,6 +1,7 @@
 package ca.csf.mobile2.tp2.question
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import okhttp3.ResponseBody
 import org.androidannotations.annotations.Background
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.UiThread
@@ -62,7 +63,7 @@ class QuestionService {
     @Background
     fun flagQuestion(
         question : QuestionData,
-        onSuccess : (String) -> Unit,
+        onSuccess : (ResponseBody) -> Unit,
         onServerError : () -> Unit,
         onConnectivityError : () -> Unit
     ){
@@ -137,7 +138,7 @@ class QuestionService {
         fun createQuestion(@Body question: QuestionData) : Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
-        fun flagQuestion(@Path("id") id : String) : Call<String>
+        fun flagQuestion(@Path("id") id : String) : Call<ResponseBody>
 
         @POST("/api/v1/question/{id}/choose1")
         fun choose1(@Path("id") id :String) : Call<QuestionData>
@@ -147,4 +148,4 @@ class QuestionService {
     }
 }
 
-private const val URL = "http://10.200.77.203:8080"
+private const val URL = "http://10.200.82.153:8080"
