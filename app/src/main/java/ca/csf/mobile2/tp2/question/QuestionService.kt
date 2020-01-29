@@ -13,6 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import java.io.IOException
+import java.util.*
 
 
 @EBean(scope = EBean.Scope.Singleton)
@@ -69,6 +70,20 @@ class QuestionService {
         this.question = question
         val id : String = question.id.toString()
         service.flagQuestion(id).execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
+    @Background
+    fun findQuestionById(
+        id : UUID,
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
+        service.findQuestionById(id.toString()).execute(
             onSuccess,
             onServerError,
             onConnectivityError
@@ -139,6 +154,9 @@ class QuestionService {
 
         @POST("/api/v1/question/{id}/flag")
         fun flagQuestion(@Path("id") id : String) : Call<String>
+
+        @GET("/api/v1/question/{id}")
+        fun findQuestionById(@Path("id") id : String) : Call<QuestionData>
 
         @POST("/api/v1/question/{id}/choose1")
         fun choose1(@Path("id") id: String): Call<QuestionData>

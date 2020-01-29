@@ -1,8 +1,8 @@
 package ca.csf.mobile2.tp2.question
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import ca.csf.mobile2.tp2.R
 import org.androidannotations.annotations.*
@@ -48,21 +48,18 @@ class CreateQuestionActivity : AppCompatActivity() {
     }
 
     private fun onSuccess(question: QuestionData) {
-        val questionIntent = Intent(Intent.ACTION_PICK).apply {
-            // Show user only the contacts that include phone numbers.
-            /*setDataAndType(
-                Uri.parse("content://contacts"),
-            )*/
-        }
-        startActivityForResult(questionIntent, 1)
+        val questionIntent = Intent().putExtra(EXTRA_NAME, question.id)
+        setResult(Activity.RESULT_OK, questionIntent)
+        finish()
     }
 
     private fun onServerError() {
-
+        finish()
     }
 
     private fun onConnectivityError() {
-
+        finish()
     }
 
 }
+private const val EXTRA_NAME = "QUESTION"
