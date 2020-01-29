@@ -79,13 +79,13 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isConnectivityErrorDetected = false
             }
             field = value
-            notifyChanged()
+            notifyChange()
         }
 
     var isConnectivityErrorDetected : Boolean = false
         set(value) {
             field = value
-            notifyChanged()
+            notifyChange()
         }
 
     var isLoading: Boolean = false
