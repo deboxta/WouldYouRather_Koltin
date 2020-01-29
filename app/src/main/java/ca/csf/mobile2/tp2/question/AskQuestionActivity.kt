@@ -23,7 +23,9 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @InstanceState
     protected  lateinit var viewModel: AskQuestionActivityViewModel
-    private lateinit var questionData : QuestionData
+    @InstanceState
+    protected lateinit var questionData : QuestionData
+
     private var viewState : ViewState = ViewState.IS_LOADING
         set(value) {
             when (value){
@@ -51,8 +53,10 @@ class AskQuestionActivity : AppCompatActivity() {
                 )
         }
         binding.viewModel = viewModel
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
-        viewModel.isLoading = true
+        if (questionData.text == null){
+            questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+            viewModel.isLoading = true
+        }
     }
 
     @Click(R.id.choice1Button)
