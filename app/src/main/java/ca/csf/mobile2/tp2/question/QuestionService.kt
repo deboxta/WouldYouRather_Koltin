@@ -1,6 +1,7 @@
 package ca.csf.mobile2.tp2.question
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import okhttp3.ResponseBody
 import org.androidannotations.annotations.Background
 import org.androidannotations.annotations.EBean
 import org.androidannotations.annotations.UiThread
@@ -62,11 +63,11 @@ class QuestionService {
 
     @Background
     fun flagQuestion(
-        question: QuestionData,
-        onSuccess: (String) -> Unit,
-        onServerError: () -> Unit,
-        onConnectivityError: () -> Unit
-    ) {
+        question : QuestionData,
+        onSuccess : (ResponseBody) -> Unit,
+        onServerError : () -> Unit,
+        onConnectivityError : () -> Unit
+    ){
         this.question = question
         val id : String = question.id.toString()
         service.flagQuestion(id).execute(
@@ -153,7 +154,7 @@ class QuestionService {
         fun createQuestion(@Body question: QuestionData): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
-        fun flagQuestion(@Path("id") id : String) : Call<String>
+        fun flagQuestion(@Path("id") id : String) : Call<ResponseBody>
 
         @GET("/api/v1/question/{id}")
         fun findQuestionById(@Path("id") id : String) : Call<QuestionData>

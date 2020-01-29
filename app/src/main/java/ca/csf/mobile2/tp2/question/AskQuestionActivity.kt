@@ -9,6 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import ca.csf.mobile2.tp2.R
 import ca.csf.mobile2.tp2.databinding.ActivityAskQuestionBinding
 import ca.csf.mobile2.tp2.question.viewModels.AskQuestionActivityViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_ask_question.*
+import okhttp3.ResponseBody
 import org.androidannotations.annotations.*
 import java.util.*
 
@@ -22,8 +25,9 @@ class AskQuestionActivity : AppCompatActivity() {
     protected lateinit var binding: ActivityAskQuestionBinding
 
     @InstanceState
-    protected lateinit var viewModel: AskQuestionActivityViewModel
-    private lateinit var questionData: QuestionData
+    protected  lateinit var viewModel: AskQuestionActivityViewModel
+    @InstanceState
+    protected lateinit var questionData : QuestionData
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -40,14 +44,14 @@ class AskQuestionActivity : AppCompatActivity() {
                 AskQuestionActivityViewModel(
                     questionData
                 )
+            questionService.findRandomQuestion(
+                this::onSuccess,
+                this::onServerError,
+                this::onConnectivityError
+            )
+            viewModel.isLoading = true
         }
         binding.viewModel = viewModel
-        questionService.findRandomQuestion(
-            this::onSuccess,
-            this::onServerError,
-            this::onConnectivityError
-        )
-        viewModel.isLoading = true
     }
 
     @Click(R.id.choice1Button)
@@ -109,7 +113,6 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
-        viewModel.isLoading = true
     }
 
     private fun initView() {
@@ -127,8 +130,10 @@ class AskQuestionActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSuccess(response: String) {
-        //TODO show snackbar
+    private fun onSuccess(response : ResponseBody){
+        viewModel.isLoading = true
+        Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
+        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
     }
 
     private fun onServerError() {
@@ -139,6 +144,7 @@ class AskQuestionActivity : AppCompatActivity() {
     private fun onConnectivityError() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
+        viewModel.isConnectivityErrorDetected = true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
