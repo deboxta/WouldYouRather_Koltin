@@ -27,13 +27,11 @@ class CreateQuestionActivity : AppCompatActivity() {
     @Bean
     protected lateinit var questionService: QuestionService
 
-    companion object {
-        fun getActivityContext() : Context =
-    }
     @AfterViews
     protected fun onCreate() {
         if (!this::viewModel.isInitialized) {
             questionData = QuestionData()
+            questionData.text = getString(R.string.text_initial_question)
             viewModel =
                 CreateQuestionActivityViewModel(
                     questionData
@@ -68,4 +66,5 @@ class CreateQuestionActivity : AppCompatActivity() {
     }
 
 }
+
 private const val EXTRA_NAME = "QUESTION"
