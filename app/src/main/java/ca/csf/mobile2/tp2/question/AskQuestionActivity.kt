@@ -3,7 +3,6 @@ package ca.csf.mobile2.tp2.question
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.provider.Contacts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import ca.csf.mobile2.tp2.R
@@ -133,6 +132,7 @@ class AskQuestionActivity : AppCompatActivity() {
 
     //Pour le flag qui a une réponse différente.
     private fun onSuccess(response: ResponseBody) {
+        viewModel.isFlagging = true
         viewModel.isLoading = true
 
         if (response.string() == FLAG_RESPONSE) {
@@ -174,6 +174,5 @@ class AskQuestionActivity : AppCompatActivity() {
 }
 
 private const val FLAG_RESPONSE: String = "OK"
-
 private const val CREATE_QUESTION_REQUEST_CODE = 1
 private const val EXTRA_NAME = "QUESTION"

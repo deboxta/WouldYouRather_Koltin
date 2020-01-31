@@ -43,12 +43,23 @@ class CreateQuestionActivity : AppCompatActivity() {
 
     @Click(R.id.createButton)
     protected fun createQuestion() {
-        questionService.createQuestion(
-            questionData,
-            this::onSuccess,
-            this::onServerError,
-            this::onConnectivityError
-        )
+        if(!checkIfFieldsNotEmpty()){
+            questionService.createQuestion(
+                questionData,
+                this::onSuccess,
+                this::onServerError,
+                this::onConnectivityError
+            )
+        } else {
+            Snackbar.make(rootView, R.string.text_error_fill_field, Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private fun checkIfFieldsNotEmpty() : Boolean{
+        return (viewModel.questionText.isNullOrEmpty() ||
+                viewModel.choice1Text.isNullOrEmpty() ||
+                viewModel.choice2Text.isNullOrEmpty()
+                )
     }
 
     private fun onSuccess(question: QuestionData) {
