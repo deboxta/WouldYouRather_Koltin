@@ -6,13 +6,25 @@ import java.util.*
 
 @Parcel(Parcel.Serialization.BEAN)
 class QuestionData @ParcelConstructor constructor(
-    choice1: String?,
-    choice2: String?,
     id: UUID?,
+    text: String,
+    choice1: String,
+    choice2: String,
     nbChoice1: Int,
-    nbChoice2: Int,
-    text: String?
+    nbChoice2: Int
 ) {
+    var id = id
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
+    var text = text
+        set(value) {
+            field = value
+            notifyChanged()
+        }
+
     var choice1 = choice1
         set(value) {
             field = value
@@ -20,12 +32,6 @@ class QuestionData @ParcelConstructor constructor(
         }
 
     var choice2 = choice2
-        set(value) {
-            field = value
-            notifyChanged()
-        }
-
-    var id = id
         set(value) {
             field = value
             notifyChanged()
@@ -43,16 +49,10 @@ class QuestionData @ParcelConstructor constructor(
             notifyChanged()
         }
 
-    var text = text
-        set(value) {
-            field = value
-            notifyChanged()
-        }
-
     private val changeListeners: MutableList<() -> Unit> = mutableListOf()
     private val hasListeners get() = changeListeners.size > 0
 
-    constructor() : this(null, null, null, 0, 0, null)
+    constructor() : this(null, "", "", "", 0, 0)
 
     fun addChangeListener(listener: () -> Unit) {
         changeListeners.add(listener)

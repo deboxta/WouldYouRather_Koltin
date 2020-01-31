@@ -22,8 +22,6 @@ class QuestionService {
 
     private val service: Service
 
-    private lateinit var question: QuestionData
-
     init {
         val retrofit = Retrofit.Builder()
             .baseUrl(URL)
@@ -53,7 +51,6 @@ class QuestionService {
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
-        this.question = question
         service.createQuestion(question).execute(
             onSuccess,
             onServerError,
@@ -68,23 +65,23 @@ class QuestionService {
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
-        this.question = question
-        val id: String = question.id.toString()
-        service.flagQuestion(id).execute(
-            onSuccess,
-            onServerError,
-            onConnectivityError
-        )
+        if (question.id != null) {
+            service.flagQuestion(question.id!!).execute(
+                onSuccess,
+                onServerError,
+                onConnectivityError
+            )
+        }
     }
 
     @Background
     fun findQuestionById(
-        id : UUID,
+        id: UUID,
         onSuccess: (QuestionData) -> Unit,
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
-        service.findQuestionById(id.toString()).execute(
+        service.findQuestionById(id).execute(
             onSuccess,
             onServerError,
             onConnectivityError
@@ -98,13 +95,13 @@ class QuestionService {
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
-        this.question = question
-        val id: String = question.id.toString()
-        service.choose1(id).execute(
-            onSuccess,
-            onServerError,
-            onConnectivityError
-        )
+        if (question.id != null) {
+            service.choose1(question.id!!).execute(
+                onSuccess,
+                onServerError,
+                onConnectivityError
+            )
+        }
     }
 
     @Background
@@ -114,13 +111,13 @@ class QuestionService {
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
     ) {
-        this.question = question
-        val id: String = question.id.toString()
-        service.choose2(id).execute(
-            onSuccess,
-            onServerError,
-            onConnectivityError
-        )
+        if (question.id != null) {
+            service.choose2(question.id!!).execute(
+                onSuccess,
+                onServerError,
+                onConnectivityError
+            )
+        }
     }
 
     @UiThread
@@ -154,16 +151,16 @@ class QuestionService {
         fun createQuestion(@Body question: QuestionData): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
-        fun flagQuestion(@Path("id") id: String): Call<ResponseBody>
+        fun flagQuestion(@Path("id") id: UUID): Call<ResponseBody>
 
         @GET("/api/v1/question/{id}")
-        fun findQuestionById(@Path("id") id : String) : Call<QuestionData>
+        fun findQuestionById(@Path("id") id: UUID): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/choose1")
-        fun choose1(@Path("id") id: String): Call<QuestionData>
+        fun choose1(@Path("id") id: UUID): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/choose2")
-        fun choose2(@Path("id") id: String): Call<QuestionData>
+        fun choose2(@Path("id") id: UUID): Call<QuestionData>
     }
 }
 

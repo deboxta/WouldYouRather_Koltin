@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Aimerais-tu mieux...</string>
+    <string name="app_name">Aimerais-tu mieux…</string>
 
     <string name="hint_choice1">Premier choix</string>
     <string name="hint_choice2">Second choix</string>
@@ -9,14 +9,16 @@
     <string name="text_create_question">Créer une question</string>
     <string name="text_error">Erreur</string>
     <string name="text_error_fill_field">Veuilliez remplir ce champ.</string>
-    <string name="text_error_internet">Pas de connectivité internet. Veuilliez réessayer plus tard.</string>
+    <string name="text_error_internet">Pas de connection internet. Veuilliez réessayer plus tard.</string>
     <string name="text_error_server">Quelque chose s\'est mal passé. Veuilliez réessayer plus tard.</string>
-    <string name="text_initial_question">Aimerais-tu mieux...</string>
+    <string name="text_initial_question">Aimerais-tu mieux…</string>
     <string name="text_report">Reporter</string>
     <string name="text_reported">Cette question a été reportée. Merci!</string>
-    <string name="text_reported_deleted">Cette question a été reportée et supprimé. Merci!</string>
+    <string name="text_reported_deleted">Cette question a été reportée et supprimée. Merci!</string>
     <string name="text_retry">Réessayer</string>
 
     <string name="title_activity_create_question">Créer une question</string>
-    <string name="title_activity_question">Aimerais-tu...</string>
+    <string name="title_activity_question">Aimerais-tu…</string>
+
+    <string name="percent_statistics">%1$d %%</string>
 </resources>

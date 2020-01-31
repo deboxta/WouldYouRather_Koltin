@@ -21,89 +21,100 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
         }
 
     @get:Transient
-    val titleText: String?
+    val titleText: String
         get() = questionData.text
 
     @get:Transient
-    val choice1Text: String?
+    val choice1Text: String
         get() = questionData.choice1
 
     @get:Transient
-    val choice2Text: String?
+    val choice2Text: String
         get() = questionData.choice2
 
     @get:Transient
-    val choice1Statistic: String?
+    val choice1Statistic: Int
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
-                (questionData.nbChoice1 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
+                (questionData.nbChoice1 * 100 / (questionData.nbChoice1 + questionData.nbChoice2))
             } else {
-                null
+                questionData.nbChoice1
             }
 
     @get:Transient
-    val choice2Statistic: String?
+    val choice2Statistic: Int
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
-                (questionData.nbChoice2 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
+                (questionData.nbChoice2 * 100 / (questionData.nbChoice1 + questionData.nbChoice2))
             } else {
-                null
+                questionData.nbChoice2
             }
 
     var isAskingQuestion: Boolean = false
         set(value) {
-            if (value) {
+            if (field != value) {
                 isErrorDetected = false
                 isQuestionAnswered = false
                 isFlagging = false
-            }
-            field = value
 
-            notifyChange()
+                field = value
+
+                notifyChange()
+            }
         }
 
     var isQuestionAnswered: Boolean = false
         set(value) {
-            if (value) {
+            if (field != value) {
                 isAskingQuestion = false
                 isErrorDetected = false
                 isFlagging = false
+
+                field = value
+
+                notifyChange()
             }
-            field = value
-            notifyChange()
         }
 
-    var isErrorDetected : Boolean = false
+    var isErrorDetected: Boolean = false
         set(value) {
-            if (value){
+            if (field != value) {
                 isAskingQuestion = false
                 isQuestionAnswered = false
                 isConnectivityErrorDetected = false
                 isFlagging = false
+
+                field = value
+
+                notifyChange()
             }
-            field = value
-            notifyChange()
         }
 
-    var isConnectivityErrorDetected : Boolean = false
+    var isConnectivityErrorDetected: Boolean = false
         set(value) {
             field = value
             notifyChange()
         }
 
-    var isFlagging : Boolean = false
+    var isFlagging: Boolean = false
         set(value) {
-            if (value){
+            if (field != value) {
                 isAskingQuestion = false
                 isQuestionAnswered = false
                 isErrorDetected = false
+
+                field = value
+
+                notifyChange()
             }
-            field = value
-            notifyChange()
         }
 
-
     var isLoading: Boolean = false
+        set(value) {
+            field = value
+
+            notifyChange()
+        }
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         super.addOnPropertyChangedCallback(callback)
@@ -117,6 +128,3 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
         questionData.removeChangeListener(this::notifyChange)
     }
 }
-
-private const val PERCENT = 100
-private const val PERCENT_SYMBOL = "%"

@@ -40,16 +40,8 @@ class AskQuestionActivity : AppCompatActivity() {
         initView()
         if (!this::viewModel.isInitialized) {
             questionData = QuestionData()
-            viewModel =
-                AskQuestionActivityViewModel(
-                    questionData
-                )
-            questionService.findRandomQuestion(
-                this::onSuccess,
-                this::onServerError,
-                this::onConnectivityError
-            )
-            viewModel.isLoading = true
+            viewModel = AskQuestionActivityViewModel(questionData)
+            findRandomQuestion()
         }
         binding.viewModel = viewModel
     }
@@ -59,7 +51,7 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 
     @Click(R.id.choice1Button)
-    protected fun onClickResponseButtonChoose1() {
+    protected fun sendChoice1() {
         questionService.choose1(
             questionData,
             this::onSuccess,
@@ -70,19 +62,9 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 
     @Click(R.id.choice2Button)
-    protected fun onClickResponseButtonChoose2() {
+    protected fun sendChoice2() {
         questionService.choose2(
             questionData,
-            this::onSuccess,
-            this::onServerError,
-            this::onConnectivityError
-        )
-        viewModel.isLoading = true
-    }
-
-    @Click(R.id.choice1ResultBackground, R.id.choice2ResultBackground)
-    protected fun onClickResultButton() {
-        questionService.findRandomQuestion(
             this::onSuccess,
             this::onServerError,
             this::onConnectivityError
@@ -98,8 +80,8 @@ class AskQuestionActivity : AppCompatActivity() {
         )
     }
 
-    @Click(R.id.retryButton)
-    protected fun onClickRetryButton() {
+    @Click(R.id.retryButton, R.id.choice1ResultBackground, R.id.choice2ResultBackground)
+    protected fun findRandomQuestion() {
         questionService.findRandomQuestion(
             this::onSuccess,
             this::onServerError,
@@ -109,9 +91,18 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 
     @OptionsItem(R.id.flagButton)
-    protected fun flag() {
+    protected fun flagQuestion() {
         questionService.flagQuestion(
             questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+    }
+
+    private fun findQuestion(id : UUID){
+        questionService.findQuestionById(
+            id,
             this::onSuccess,
             this::onServerError,
             this::onConnectivityError
@@ -132,19 +123,13 @@ class AskQuestionActivity : AppCompatActivity() {
     //Pour le flag qui a une réponse différente.
     private fun onSuccess(response: ResponseBody) {
         viewModel.isFlagging = true
-        viewModel.isLoading = true
 
-        if (response.string() == FLAG_RESPONSE) {
+        if (response.string() == FLAG_RESPONSE_OK) {
             Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
         } else {
             Snackbar.make(rootView, R.string.text_reported_deleted, Snackbar.LENGTH_LONG).show()
         }
-
-        questionService.findRandomQuestion(
-            this::onSuccess,
-            this::onServerError,
-            this::onConnectivityError
-        )
+        findRandomQuestion()
     }
 
     private fun onServerError() {
@@ -161,19 +146,15 @@ class AskQuestionActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && requestCode == CREATE_QUESTION_REQUEST_CODE) {
+            //isAskingQuestion = false nécessaire pour ne pas afficher les résultat de la question dans le onSuccess.
             viewModel.isAskingQuestion = false
             val id: UUID = data!!.getSerializableExtra(EXTRA_NAME) as UUID
-            questionService.findQuestionById(
-                id,
-                this::onSuccess,
-                this::onServerError,
-                this::onConnectivityError
-            )
+            findQuestion(id)
         }
     }
 }
 
-private const val FLAG_RESPONSE: String = "OK"
+private const val FLAG_RESPONSE_OK = "OK"
 private const val CREATE_QUESTION_REQUEST_CODE = 1
 private const val EXTRA_NAME = "QUESTION"

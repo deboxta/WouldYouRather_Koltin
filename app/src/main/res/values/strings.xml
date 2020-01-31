@@ -19,4 +19,6 @@
     <string name="text_error_internet">No internet connectivity. Please try again later.</string>
     <string name="text_error_server">Something went wrong. Please try again later.</string>
     <string name="text_error_fill_field">Please fill this field.</string>
+
+    <string name="percent_statistics">%1$d %%</string>
 </resources>

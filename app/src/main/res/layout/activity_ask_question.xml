@@ -122,7 +122,7 @@
                 style="@style/AppTheme.Choice1ResultPercentTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@{viewModel.choice1Statistic}"
+                android:text='@{@string/percent_statistics(viewModel.choice1Statistic)}'
                 app:layout_constraintBottom_toBottomOf="@+id/choice1ResultBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
                 style="@style/AppTheme.Choice2ResultPercentTextView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@{viewModel.choice2Statistic}"
+                android:text='@{@string/percent_statistics(viewModel.choice2Statistic)}'
                 app:layout_constraintBottom_toBottomOf="@+id/choice2ResultBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
