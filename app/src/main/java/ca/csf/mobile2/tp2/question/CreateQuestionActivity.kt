@@ -19,7 +19,7 @@ class CreateQuestionActivity : AppCompatActivity(){
     protected  lateinit var viewModel: CreateQuestionActivityViewModel
 
     @InstanceState
-    private lateinit var questionData : QuestionData
+    protected lateinit var questionData : QuestionData
 
     @Bean
     protected lateinit var questionService: QuestionService
