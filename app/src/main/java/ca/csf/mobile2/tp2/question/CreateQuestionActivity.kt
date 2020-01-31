@@ -54,12 +54,18 @@ class CreateQuestionActivity : AppCompatActivity() {
     }
 
     private fun onServerError() {
+        val questionIntent = Intent().putExtra(EXTRA_ON_SERVER_ERROR, true)
+        setResult(Activity.RESULT_CANCELED, questionIntent)
         finish()
     }
 
     private fun onConnectivityError() {
+        val questionIntent = Intent().putExtra(EXTRA_ON_CONNECTIVITY_ERROR, true)
+        setResult(Activity.RESULT_CANCELED, questionIntent)
         finish()
     }
 
 }
 private const val EXTRA_NAME = "QUESTION"
+private const val EXTRA_ON_SERVER_ERROR = "SERVER_ERROR"
+private const val EXTRA_ON_CONNECTIVITY_ERROR = "CONNECTIVITY_ERROR"

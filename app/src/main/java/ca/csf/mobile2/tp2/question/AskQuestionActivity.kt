@@ -159,6 +159,8 @@ class AskQuestionActivity : AppCompatActivity() {
                 this::onServerError,
                 this::onConnectivityError
             )
+        } else if (resultCode == Activity.RESULT_CANCELED){
+            
         }
     }
 }
