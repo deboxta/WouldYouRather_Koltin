@@ -12,6 +12,7 @@
     <string name="text_retry">Retry</string>
     <string name="text_report">Report</string>
     <string name="text_reported">This question has been reported. Thank you!</string>
+    <string name="text_reported_deleted">This question has been reported and deleted. Thank you!</string>
     <string name="text_initial_question" tools:ignore="TypographyEllipsis">Would you rather...</string>
 
     <string name="text_error">Error</string>

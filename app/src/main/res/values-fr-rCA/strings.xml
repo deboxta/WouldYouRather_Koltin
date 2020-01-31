@@ -14,6 +14,7 @@
     <string name="text_initial_question">Aimerais-tu mieux...</string>
     <string name="text_report">Reporter</string>
     <string name="text_reported">Cette question a été reportée. Merci!</string>
+    <string name="text_reported_deleted">Cette question a été reportée et supprimé. Merci!</string>
     <string name="text_retry">Réessayer</string>
 
     <string name="title_activity_create_question">Créer une question</string>

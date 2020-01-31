@@ -55,6 +55,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value) {
                 isErrorDetected = false
                 isQuestionAnswered = false
+                isFlagging = false
             }
             field = value
 
@@ -66,6 +67,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             if (value) {
                 isAskingQuestion = false
                 isErrorDetected = false
+                isFlagging = false
             }
             field = value
             notifyChange()
@@ -77,6 +79,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isAskingQuestion = false
                 isQuestionAnswered = false
                 isConnectivityErrorDetected = false
+                isFlagging = false
             }
             field = value
             notifyChange()
@@ -87,6 +90,18 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             field = value
             notifyChange()
         }
+
+    var isFlagging : Boolean = false
+        set(value) {
+            if (value){
+                isAskingQuestion = false
+                isQuestionAnswered = false
+                isErrorDetected = false
+            }
+            field = value
+            notifyChange()
+        }
+
 
     var isLoading: Boolean = false
 

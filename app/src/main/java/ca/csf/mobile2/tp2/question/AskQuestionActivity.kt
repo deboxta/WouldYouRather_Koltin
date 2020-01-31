@@ -3,7 +3,6 @@ package ca.csf.mobile2.tp2.question
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.provider.Contacts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import ca.csf.mobile2.tp2.R
@@ -26,6 +25,7 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @InstanceState
     protected lateinit var viewModel: AskQuestionActivityViewModel
+
     @InstanceState
     protected lateinit var questionData: QuestionData
 
@@ -52,6 +52,10 @@ class AskQuestionActivity : AppCompatActivity() {
             viewModel.isLoading = true
         }
         binding.viewModel = viewModel
+    }
+
+    private fun initView() {
+        setSupportActionBar(toolbar)
     }
 
     @Click(R.id.choice1Button)
@@ -114,10 +118,6 @@ class AskQuestionActivity : AppCompatActivity() {
         )
     }
 
-    private fun initView() {
-        setSupportActionBar(toolbar)
-    }
-
     private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
@@ -129,9 +129,17 @@ class AskQuestionActivity : AppCompatActivity() {
         }
     }
 
+    //Pour le flag qui a une réponse différente.
     private fun onSuccess(response: ResponseBody) {
+        viewModel.isFlagging = true
         viewModel.isLoading = true
-        Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
+
+        if (response.string() == FLAG_RESPONSE) {
+            Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
+        } else {
+            Snackbar.make(rootView, R.string.text_reported_deleted, Snackbar.LENGTH_LONG).show()
+        }
+
         questionService.findRandomQuestion(
             this::onSuccess,
             this::onServerError,
@@ -166,5 +174,6 @@ class AskQuestionActivity : AppCompatActivity() {
     }
 }
 
+private const val FLAG_RESPONSE: String = "OK"
 private const val CREATE_QUESTION_REQUEST_CODE = 1
 private const val EXTRA_NAME = "QUESTION"

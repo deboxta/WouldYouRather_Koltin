@@ -38,43 +38,6 @@
 
         <!--
         *************************************************************
-        IMPORTANT!!!!
-
-        En temps normal, ce fichier de layout serait séparé en
-        plusieurs petits fichiers. Cependant, cela complexifie
-        votre gestion du DataBinding. Pour simplifier le travail,
-        il n'y a qu'un seul fichier contenant diverses parties que
-        vous devrez afficher ou cacher en fonction des besoins.
-
-        Pour afficher ou cacher un élément d'interface, utilisez
-        cet attribut :
-
-            android:visibility
-
-        Ce dernier peut recevoir une de ces trois valeurs :
-
-         * View.VISIBLE
-         * View.INVISIBLE
-         * View.GONE
-
-        Quand vous serez rendu à modifier ce fichier pour faire du
-        DataBinding, ajoutez ceci dans la balise « <data> » :
-
-            <import type="android.view.View" />
-
-        Cela vous sera nécessaire pour avoir accès aux différentes
-        constantes.
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.isAskingQuestion ? View.VISIBLE : View.INVISIBLE}">
-
-        *************************************************************
-        -->
-
-        <!--
-        *************************************************************
         Section "Poser une question"
         *************************************************************
         -->

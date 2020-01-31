@@ -63,13 +63,13 @@ class QuestionService {
 
     @Background
     fun flagQuestion(
-        question : QuestionData,
-        onSuccess : (ResponseBody) -> Unit,
-        onServerError : () -> Unit,
-        onConnectivityError : () -> Unit
-    ){
+        question: QuestionData,
+        onSuccess: (ResponseBody) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
         this.question = question
-        val id : String = question.id.toString()
+        val id: String = question.id.toString()
         service.flagQuestion(id).execute(
             onSuccess,
             onServerError,
@@ -115,7 +115,7 @@ class QuestionService {
         onConnectivityError: () -> Unit
     ) {
         this.question = question
-        val id : String = question.id.toString()
+        val id: String = question.id.toString()
         service.choose2(id).execute(
             onSuccess,
             onServerError,
@@ -154,7 +154,7 @@ class QuestionService {
         fun createQuestion(@Body question: QuestionData): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
-        fun flagQuestion(@Path("id") id : String) : Call<ResponseBody>
+        fun flagQuestion(@Path("id") id: String): Call<ResponseBody>
 
         @GET("/api/v1/question/{id}")
         fun findQuestionById(@Path("id") id : String) : Call<QuestionData>
@@ -167,4 +167,4 @@ class QuestionService {
     }
 }
 
-private const val URL = "http://10.200.77.203:8080"
+private const val URL = "http://10.200.82.153:8080"
