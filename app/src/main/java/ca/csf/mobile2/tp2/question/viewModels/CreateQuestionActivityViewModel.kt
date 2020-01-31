@@ -13,21 +13,33 @@ class CreateQuestionActivityViewModel @ParcelConstructor constructor(
 ) : BaseObservable() {
 
     @get:Transient
-    var questionText : String?
-        get() = questionData.text
-        set(value) { questionData.text = value }
+    var questionText: String
+        get() =
+            if (questionData.text != null){
+                questionData.text!!
+            } else {
+                questionData.text = "r" //Resources.getSystem().getString(R.string.text_initial_question)
+                questionData.text!!
+            }
+        set(value) {
+            questionData.text = value
+        }
 
     @get:Transient
-    var choice1Text : String?
+    var choice1Text: String?
         get() = questionData.choice1
-        set(value) { questionData.choice1 = value}
+        set(value) {
+            questionData.choice1 = value
+        }
 
     @get:Transient
-    var choice2Text : String?
-        get() = questionData.choice1
-        set(value) { questionData.choice1 = value}
+    var choice2Text: String?
+        get() = questionData.choice2
+        set(value) {
+            questionData.choice2 = value
+        }
 
-    var isLoading : Boolean = false
+    var isLoading: Boolean = false
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         super.addOnPropertyChangedCallback(callback)
