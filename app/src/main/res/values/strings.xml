@@ -12,10 +12,13 @@
     <string name="text_retry">Retry</string>
     <string name="text_report">Report</string>
     <string name="text_reported">This question has been reported. Thank you!</string>
+    <string name="text_reported_deleted">This question has been reported and deleted. Thank you!</string>
     <string name="text_initial_question" tools:ignore="TypographyEllipsis">Would you rather...</string>
 
     <string name="text_error">Error</string>
     <string name="text_error_internet">No internet connectivity. Please try again later.</string>
     <string name="text_error_server">Something went wrong. Please try again later.</string>
     <string name="text_error_fill_field">Please fill this field.</string>
+
+    <string name="percent_statistics">%1$d %%</string>
 </resources>
