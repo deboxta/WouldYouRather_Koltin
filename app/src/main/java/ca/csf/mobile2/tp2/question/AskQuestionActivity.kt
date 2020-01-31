@@ -118,10 +118,6 @@ class AskQuestionActivity : AppCompatActivity() {
         )
     }
 
-    private fun initView() {
-        setSupportActionBar(toolbar)
-    }
-
     private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
@@ -140,6 +136,8 @@ class AskQuestionActivity : AppCompatActivity() {
 
         if (response.string() == FLAG_RESPONSE) {
             Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
+        } else {
+            Snackbar.make(rootView, R.string.text_reported_deleted, Snackbar.LENGTH_LONG).show()
         }
 
         questionService.findRandomQuestion(
