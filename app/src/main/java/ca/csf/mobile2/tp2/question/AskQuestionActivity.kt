@@ -92,7 +92,6 @@ class AskQuestionActivity : AppCompatActivity() {
             Intent(this, CreateQuestionActivity_::class.java),
             CREATE_QUESTION_REQUEST_CODE
         )
-        viewModel.isLoading = true
     }
 
     @Click(R.id.retryButton)
@@ -130,10 +129,14 @@ class AskQuestionActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSuccess(response : ResponseBody){
+    private fun onSuccess(response: ResponseBody) {
         viewModel.isLoading = true
         Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
     }
 
     private fun onServerError() {

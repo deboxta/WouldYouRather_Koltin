@@ -1,11 +1,7 @@
 package ca.csf.mobile2.tp2.question.viewModels
 
-import android.content.res.Resources
-import androidx.core.content.res.TypedArrayUtils.getString
-import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.databinding.BaseObservable
 import androidx.databinding.Observable
-import ca.csf.mobile2.tp2.R
 import ca.csf.mobile2.tp2.question.QuestionData
 import org.parceler.Parcel
 import org.parceler.ParcelConstructor
