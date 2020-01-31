@@ -19,12 +19,13 @@ import org.androidannotations.annotations.*
 class AskQuestionActivity : AppCompatActivity() {
 
     @BindingObject
-    protected  lateinit var binding : ActivityAskQuestionBinding
+    protected lateinit var binding: ActivityAskQuestionBinding
 
     @InstanceState
-    protected  lateinit var viewModel: AskQuestionActivityViewModel
+    protected lateinit var viewModel: AskQuestionActivityViewModel
+
     @InstanceState
-    protected lateinit var questionData : QuestionData
+    protected lateinit var questionData: QuestionData
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -32,10 +33,11 @@ class AskQuestionActivity : AppCompatActivity() {
     @Bean
     protected lateinit var questionService: QuestionService
 
+
     @AfterViews
     protected fun onCreate() {
         initView()
-        if (!this::viewModel.isInitialized ) {
+        if (!this::viewModel.isInitialized) {
             questionData = QuestionData()
             viewModel =
                 AskQuestionActivityViewModel(
@@ -43,78 +45,116 @@ class AskQuestionActivity : AppCompatActivity() {
                 )
         }
         binding.viewModel = viewModel
-        if (questionData.text == null){
-            questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+        if (questionData.text == null) {
+            questionService.findRandomQuestion(
+                this::onSuccess,
+                this::onServerError,
+                this::onConnectivityError
+            )
             viewModel.isLoading = true
         }
-    }
-
-    @Click(R.id.choice1Button)
-    protected fun onClickResponseButtonChoose1(){
-        questionService.choose1(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
-        viewModel.isLoading = true
-    }
-
-    @Click(R.id.choice1ResultBackground,R.id.choice2ResultBackground)
-    protected fun onClickResultButton(){
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
-        viewModel.isLoading = true
-    }
-
-    @Click(R.id.choice2Button)
-    protected fun onClickResponseButtonChoose2(){
-        questionService.choose2(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
-        viewModel.isLoading = true
-    }
-
-    @Click(R.id.createButton)
-    protected fun onClickCreateButton(){
-        startActivity(Intent(this, CreateQuestionActivity_::class.java))
-        viewModel.isLoading = true
-    }
-
-    @Click(R.id.retryButton)
-    protected fun onClickRetryButton(){
-        viewModel.isLoading = true
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
-    }
-
-    @OptionsItem(R.id.flagButton)
-    protected fun flag() {
-        questionService.flagQuestion(questionData,this::onSuccess,this::onServerError,this::onConnectivityError)
     }
 
     private fun initView() {
         setSupportActionBar(toolbar)
     }
 
-    private fun onSuccess (question : QuestionData){
+    @Click(R.id.choice1Button)
+    protected fun onClickResponseButtonChoose1() {
+        questionService.choose1(
+            questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+        viewModel.isLoading = true
+    }
+
+    @Click(R.id.choice1ResultBackground, R.id.choice2ResultBackground)
+    protected fun onClickResultButton() {
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+        viewModel.isLoading = true
+    }
+
+    @Click(R.id.choice2Button)
+    protected fun onClickResponseButtonChoose2() {
+        questionService.choose2(
+            questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+        viewModel.isLoading = true
+    }
+
+    @Click(R.id.createButton)
+    protected fun onClickCreateButton() {
+        startActivity(Intent(this, CreateQuestionActivity_::class.java))
+        viewModel.isLoading = true
+    }
+
+    @Click(R.id.retryButton)
+    protected fun onClickRetryButton() {
+        viewModel.isLoading = true
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+    }
+
+    @OptionsItem(R.id.flagButton)
+    protected fun flag() {
+        questionService.flagQuestion(
+            questionData,
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
+    }
+
+    private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
         viewModel.questionData = question
-        if (!viewModel.isAskingQuestion){
+        if (!viewModel.isAskingQuestion) {
             viewModel.isAskingQuestion = true
-        }else{
+        } else {
             viewModel.isQuestionAnswered = true
         }
     }
 
-    private fun onSuccess(response : ResponseBody){
+    //Pour le flag qui a une réponse différente.
+    private fun onSuccess(response: ResponseBody) {
         viewModel.isFlagging = true
         viewModel.isLoading = true
-        Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
-        questionService.findRandomQuestion(this::onSuccess,this::onServerError,this::onConnectivityError)
+
+        if (response.string() == FLAG_RESPONSE) {
+            Snackbar.make(rootView, R.string.text_reported, Snackbar.LENGTH_LONG).show()
+        }
+
+        questionService.findRandomQuestion(
+            this::onSuccess,
+            this::onServerError,
+            this::onConnectivityError
+        )
     }
 
-    private fun onServerError(){
+    private fun onServerError() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
     }
 
-    private fun onConnectivityError(){
+    private fun onConnectivityError() {
         viewModel.isLoading = false
         viewModel.isErrorDetected = true
         viewModel.isConnectivityErrorDetected = true
     }
 }
+
+private const val FLAG_RESPONSE: String = "OK"
 
