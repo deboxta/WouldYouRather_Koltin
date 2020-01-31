@@ -13,14 +13,8 @@ class CreateQuestionActivityViewModel @ParcelConstructor constructor(
 ) : BaseObservable() {
 
     @get:Transient
-    var questionText: String
-        get() =
-            if (questionData.text != null){
-                questionData.text!!
-            } else {
-                questionData.text = "r" //Resources.getSystem().getString(R.string.text_initial_question)
-                questionData.text!!
-            }
+    var questionText: String?
+        get() = questionData.text
         set(value) {
             questionData.text = value
         }

@@ -25,9 +25,9 @@ class AskQuestionActivity : AppCompatActivity() {
     protected lateinit var binding: ActivityAskQuestionBinding
 
     @InstanceState
-    protected  lateinit var viewModel: AskQuestionActivityViewModel
+    protected lateinit var viewModel: AskQuestionActivityViewModel
     @InstanceState
-    protected lateinit var questionData : QuestionData
+    protected lateinit var questionData: QuestionData
 
     @ViewById(R.id.toolbar)
     protected lateinit var toolbar: Toolbar
@@ -152,9 +152,9 @@ class AskQuestionActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        viewModel.isAskingQuestion = false
 
         if (resultCode == Activity.RESULT_OK) {
+            viewModel.isAskingQuestion = false
             val id: UUID = data!!.getSerializableExtra(EXTRA_NAME) as UUID
             questionService.findQuestionById(
                 id,

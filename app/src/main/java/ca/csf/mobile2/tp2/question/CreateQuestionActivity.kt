@@ -2,6 +2,7 @@ package ca.csf.mobile2.tp2.question
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import ca.csf.mobile2.tp2.R
@@ -30,6 +31,7 @@ class CreateQuestionActivity : AppCompatActivity() {
     protected fun onCreate() {
         if (!this::viewModel.isInitialized) {
             questionData = QuestionData()
+            questionData.text = getString(R.string.text_initial_question)
             viewModel =
                 CreateQuestionActivityViewModel(
                     questionData
@@ -64,4 +66,5 @@ class CreateQuestionActivity : AppCompatActivity() {
     }
 
 }
+
 private const val EXTRA_NAME = "QUESTION"
