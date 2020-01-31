@@ -35,7 +35,6 @@ class AskQuestionActivity : AppCompatActivity() {
     @Bean
     protected lateinit var questionService: QuestionService
 
-
     @AfterViews
     protected fun onCreate() {
         initView()
@@ -119,6 +118,10 @@ class AskQuestionActivity : AppCompatActivity() {
         )
     }
 
+    private fun initView() {
+        setSupportActionBar(toolbar)
+    }
+
     private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
@@ -159,9 +162,9 @@ class AskQuestionActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        viewModel.isAskingQuestion = false
 
         if (resultCode == Activity.RESULT_OK) {
+            viewModel.isAskingQuestion = false
             val id: UUID = data!!.getSerializableExtra(EXTRA_NAME) as UUID
             questionService.findQuestionById(
                 id,
