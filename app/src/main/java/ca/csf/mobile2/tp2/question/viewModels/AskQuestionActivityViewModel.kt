@@ -9,56 +9,66 @@ import org.parceler.Transient
 
 @Parcel(Parcel.Serialization.BEAN)
 class AskQuestionActivityViewModel @ParcelConstructor constructor(
-    var questionData: QuestionData
+    questionData: QuestionData
 ) : BaseObservable() {
 
-    @get:Transient
-    val choice1Text : String?
-        get() = questionData.choice1
-
-    @get:Transient
-    val choice2Text : String?
-        get() = questionData.choice2
-
-    @get:Transient
-    val choice1Statistic : String?
-        get() =
-        if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-            (questionData.nbChoice1 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
-        } else {
-            null
+    var questionData = questionData
+        set(value) {
+            field.removeChangeListener(this::notifyChange)
+            field = value
+            field.addChangeListener(this::notifyChange)
+            notifyChange()
         }
 
     @get:Transient
-    val choice2Statistic : String?
+    val titleText: String?
+        get() = questionData.text
+
+    @get:Transient
+    val choice1Text: String?
+        get() = questionData.choice1
+
+    @get:Transient
+    val choice2Text: String?
+        get() = questionData.choice2
+
+    @get:Transient
+    val choice1Statistic: String?
         get() =
-            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0){
-                (questionData.nbChoice2 * PERCENT/ (questionData.nbChoice1 + questionData.nbChoice2)).toString()
+            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
+                (questionData.nbChoice1 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
             } else {
                 null
             }
 
-    var isAskingQuestion : Boolean = false
+    @get:Transient
+    val choice2Statistic: String?
+        get() =
+            if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
+                (questionData.nbChoice2 * PERCENT / (questionData.nbChoice1 + questionData.nbChoice2)).toString() + PERCENT_SYMBOL
+            } else {
+                null
+            }
+
+    var isAskingQuestion: Boolean = false
         set(value) {
-            if (value){
+            if (value) {
                 isErrorDetected = false
                 isQuestionAnswered = false
-                isFlagging = false
             }
             field = value
 
             notifyChange()
         }
 
-    var isQuestionAnswered : Boolean = false
+    var isQuestionAnswered: Boolean = false
         set(value) {
-            if (value){
+            if (value) {
                 isAskingQuestion = false
                 isErrorDetected = false
-                isFlagging = false
             }
             field = value
-            questionData.notifyChanged()
+            notifyChange()
         }
 
     var isErrorDetected : Boolean = false
@@ -67,30 +77,18 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
                 isAskingQuestion = false
                 isQuestionAnswered = false
                 isConnectivityErrorDetected = false
-                isFlagging = false
             }
             field = value
-            questionData.notifyChanged()
+            notifyChange()
         }
 
     var isConnectivityErrorDetected : Boolean = false
         set(value) {
             field = value
-            questionData.notifyChanged()
+            notifyChange()
         }
 
-    var isFlagging : Boolean = false
-        set(value) {
-            if (value){
-                isAskingQuestion = false
-                isQuestionAnswered = false
-                isErrorDetected = false
-            }
-            field = value
-            questionData.notifyChanged()
-        }
-
-    var isLoading : Boolean = false
+    var isLoading: Boolean = false
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         super.addOnPropertyChangedCallback(callback)
@@ -106,3 +104,4 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
 }
 
 private const val PERCENT = 100
+private const val PERCENT_SYMBOL = "%"

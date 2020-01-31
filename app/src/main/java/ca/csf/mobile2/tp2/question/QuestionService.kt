@@ -14,14 +14,15 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import java.io.IOException
+import java.util.*
 
 
 @EBean(scope = EBean.Scope.Singleton)
 class QuestionService {
 
-    private val service : Service
+    private val service: Service
 
-    private lateinit var question : QuestionData
+    private lateinit var question: QuestionData
 
     init {
         val retrofit = Retrofit.Builder()
@@ -34,10 +35,10 @@ class QuestionService {
 
     @Background
     fun findRandomQuestion(
-        onSuccess : (QuestionData) -> Unit,
-        onServerError : () -> Unit,
-        onConnectivityError : () -> Unit
-    ){
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
         service.findRandomQuestion().execute(
             onSuccess,
             onServerError,
@@ -47,11 +48,11 @@ class QuestionService {
 
     @Background
     fun createQuestion(
-        question : QuestionData,
-        onSuccess : (QuestionData) -> Unit,
-        onServerError : () -> Unit,
-        onConnectivityError : () -> Unit
-    ){
+        question: QuestionData,
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
         this.question = question
         service.createQuestion(question).execute(
             onSuccess,
@@ -77,27 +78,42 @@ class QuestionService {
     }
 
     @Background
+    fun findQuestionById(
+        id : UUID,
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
+        service.findQuestionById(id.toString()).execute(
+            onSuccess,
+            onServerError,
+            onConnectivityError
+        )
+    }
+
+    @Background
     fun choose1(
-        question : QuestionData,
-        onSuccess : (QuestionData) -> Unit,
-        onServerError : () -> Unit,
-        onConnectivityError : () -> Unit
-    ){
+        question: QuestionData,
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
         this.question = question
-        val id : String = question.id.toString()
+        val id: String = question.id.toString()
         service.choose1(id).execute(
             onSuccess,
             onServerError,
             onConnectivityError
         )
     }
+
     @Background
     fun choose2(
-        question : QuestionData,
-        onSuccess : (QuestionData) -> Unit,
-        onServerError : () -> Unit,
-        onConnectivityError : () -> Unit
-    ){
+        question: QuestionData,
+        onSuccess: (QuestionData) -> Unit,
+        onServerError: () -> Unit,
+        onConnectivityError: () -> Unit
+    ) {
         this.question = question
         val id : String = question.id.toString()
         service.choose2(id).execute(
@@ -108,7 +124,7 @@ class QuestionService {
     }
 
     @UiThread
-    protected fun doInUIThread(callback : () -> Unit){
+    protected fun doInUIThread(callback: () -> Unit) {
         callback()
     }
 
@@ -116,36 +132,39 @@ class QuestionService {
         onSuccess: (T) -> Unit,
         onServerError: () -> Unit,
         onConnectivityError: () -> Unit
-    ){
+    ) {
         try {
             val response = this.execute()
-            if (response.isSuccessful){
+            if (response.isSuccessful) {
                 val result = response.body()!!
                 doInUIThread { onSuccess(result) }
             } else {
                 doInUIThread { onServerError() }
             }
-        } catch (e : IOException){
+        } catch (e: IOException) {
             doInUIThread { onConnectivityError() }
         }
     }
 
     private interface Service {
         @GET("/api/v1/question/random")
-        fun findRandomQuestion() : Call<QuestionData>
+        fun findRandomQuestion(): Call<QuestionData>
 
         @POST("/api/v1/question")
-        fun createQuestion(@Body question: QuestionData) : Call<QuestionData>
+        fun createQuestion(@Body question: QuestionData): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/flag")
         fun flagQuestion(@Path("id") id : String) : Call<ResponseBody>
 
+        @GET("/api/v1/question/{id}")
+        fun findQuestionById(@Path("id") id : String) : Call<QuestionData>
+
         @POST("/api/v1/question/{id}/choose1")
-        fun choose1(@Path("id") id :String) : Call<QuestionData>
+        fun choose1(@Path("id") id: String): Call<QuestionData>
 
         @POST("/api/v1/question/{id}/choose2")
-        fun choose2(@Path("id") id :String) : Call<QuestionData>
+        fun choose2(@Path("id") id: String): Call<QuestionData>
     }
 }
 
-private const val URL = "http://10.200.82.153:8080"
+private const val URL = "http://10.200.77.203:8080"
