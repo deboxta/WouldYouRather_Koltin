@@ -2,6 +2,7 @@ package ca.csf.mobile2.tp2.question
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import ca.csf.mobile2.tp2.R
@@ -26,6 +27,9 @@ class CreateQuestionActivity : AppCompatActivity() {
     @Bean
     protected lateinit var questionService: QuestionService
 
+    companion object {
+        fun getActivityContext() : Context =
+    }
     @AfterViews
     protected fun onCreate() {
         if (!this::viewModel.isInitialized) {
