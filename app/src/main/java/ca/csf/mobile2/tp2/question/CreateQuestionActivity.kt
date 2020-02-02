@@ -54,6 +54,7 @@ class CreateQuestionActivity : AppCompatActivity() {
         }
     }
 
+    //BC : Validation devrait se faire dans la couche model.
     private fun checkIfFieldsNotEmpty(): Boolean {
         return viewModel.questionText.isEmpty() ||
                 viewModel.choice1Text.isEmpty() ||

@@ -34,6 +34,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
 
     @get:Transient
     val choice1Statistic: Int
+        //BC : Duplication de code.
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
                 (questionData.nbChoice1 * 100 / (questionData.nbChoice1 + questionData.nbChoice2))
@@ -43,6 +44,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
 
     @get:Transient
     val choice2Statistic: Int
+    //BC : Duplication de code.
         get() =
             if (questionData.nbChoice1 != 0 || questionData.nbChoice2 != 0) {
                 (questionData.nbChoice2 * 100 / (questionData.nbChoice1 + questionData.nbChoice2))
@@ -96,6 +98,7 @@ class AskQuestionActivityViewModel @ParcelConstructor constructor(
             notifyChange()
         }
 
+    //BC : Code mort. Tu écrit la dedans, mais tu t'en sert nulle part.
     var isFlagging: Boolean = false
         set(value) {
             if (field != value) {

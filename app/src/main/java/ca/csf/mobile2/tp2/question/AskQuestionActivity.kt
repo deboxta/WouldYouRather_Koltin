@@ -52,6 +52,7 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @Click(R.id.choice1Button)
     protected fun sendChoice1() {
+        //BC : Il es possible de "spam" ce bouton pendant le loading.
         questionService.choose1(
             questionData,
             this::onSuccess,
@@ -63,6 +64,7 @@ class AskQuestionActivity : AppCompatActivity() {
 
     @Click(R.id.choice2Button)
     protected fun sendChoice2() {
+        //BC : Il es possible de "spam" ce bouton pendant le loading.
         questionService.choose2(
             questionData,
             this::onSuccess,
@@ -98,6 +100,7 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
+        //BC : Bogue. Aucune loading visible.
     }
 
     private fun findQuestion(id : UUID){
@@ -107,12 +110,15 @@ class AskQuestionActivity : AppCompatActivity() {
             this::onServerError,
             this::onConnectivityError
         )
+        //BC : Bogue. Aucune loading visible.
     }
 
     private fun onSuccess(question: QuestionData) {
         questionData = question
         viewModel.isLoading = false
         viewModel.questionData = question
+
+        //BC : TRÈS fragile. Surtour si on "spam" le bouton pour soumettre une question.
         if (!viewModel.isAskingQuestion) {
             viewModel.isAskingQuestion = true
         } else {
@@ -157,4 +163,5 @@ class AskQuestionActivity : AppCompatActivity() {
 
 private const val FLAG_RESPONSE_OK = "OK"
 private const val CREATE_QUESTION_REQUEST_CODE = 1
+//BC : Cette constante est à deux places différentes.
 private const val EXTRA_NAME = "QUESTION"
